@@ -12,9 +12,9 @@ const playag = document.querySelector('.reseat');
 const buttonmo = document.querySelector('.resat');
 const mees = document.querySelector('#mese');
 const imgremove = document.querySelectorAll('.lives');
-let life = [...imgremove];
+let life = [ ...imgremove ];
 const scor = document.querySelector('.score');
-scor.textContent = scorey;
+scor.textContent = player.scorey;
 // Enemies our player must avoid
 class Enemy {
 	constructor(x, y, speed) {
@@ -25,9 +25,9 @@ class Enemy {
 	}
 	render() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
-// Update the enemy's position, required method for game
-// Parameter: dt, a time delta between ticks
+	}
+	// Update the enemy's position, required method for game
+	// Parameter: dt, a time delta between ticks
 
 	// Draw the enemy on the screen, required method for game
 	update(dt) {
@@ -54,9 +54,12 @@ easy.addEventListener('click', () => {
 	if (isfirstclick === true) {
 		isfirstclick = false;
 		//push the objects into the array
-		return allEnemies.push(new Enemy(0, 220, Math.random() * 200 + 300), new Enemy(0, 150, Math.random() * 150 + 120),
+		return allEnemies.push(
+			new Enemy(0, 220, Math.random() * 200 + 300),
+			new Enemy(0, 150, Math.random() * 150 + 120),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 350 + 400));
+			new Enemy(0, 60, Math.random() * 350 + 400)
+		);
 	}
 });
 //click on hard mode
@@ -64,9 +67,12 @@ hard.addEventListener('click', () => {
 	if (isfirstclick === true) {
 		isfirstclick = false;
 		//push the objects into the array
-		return allEnemies.push(new Enemy(0, 220, Math.random() * 900 + 1000), new Enemy(0, 150, Math.random() * 700 + 800),
+		return allEnemies.push(
+			new Enemy(0, 220, Math.random() * 900 + 1000),
+			new Enemy(0, 150, Math.random() * 700 + 800),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 550 + 600));
+			new Enemy(0, 60, Math.random() * 550 + 600)
+		);
 	}
 });
 class Player {
@@ -75,7 +81,6 @@ class Player {
 		this.y = y;
 		this.sprite = 'images/char-boy.png';
 		//for the score
-		scorey = 0;
 	}
 	// a reseat methode if the player reach the end or hit
 	reset() {
@@ -102,45 +107,38 @@ class Player {
 		if (arrowKeyPress === 'up') {
 			this.y -= 84;
 		}
-//draw player in the screen
-Player.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-	Player.prototype.theEnd();
-};
-//player cant get out of the game
-Player.prototype.update = function(dt) {
-	if (this.x > 400) {
-		this.x = 400;
+		if (arrowKeyPress === 'down') {
+			this.y += 84;
+		}
 	}
-	if (this.x < 0) {
-		this.x = 0;
+	//draw player in the screen
+	render() {
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+		Player.prototype.theEnd();
 	}
-	if (this.y > 400) {
-		this.y = 400;
+	//player cant get out of the game
+	update(dt) {
+		if (this.x > 400) {
+			this.x = 400;
+		}
+		if (this.x < 0) {
+			this.x = 0;
+		}
+		if (this.y > 400) {
+			this.y = 400;
+		}
+		if (this.y < 0) {
+			this.y = 0;
+		}
 	}
-	if (this.y < 0) {
-		this.y = 0;
-	}
-};
+}
+
 var player = new Player();
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 //handel player movment
-Player.prototype.handleInput = function(arrowKeyPress) {
-	if (arrowKeyPress === 'right') {
-		this.x += 101;
-	}
-	if (arrowKeyPress === 'left') {
-		this.x -= 101;}
 
-	if (arrowKeyPress === 'up') {
-		this.y -= 84;
-	}
-	if (arrowKeyPress === 'down') {
-		this.y += 84;
-	}
-};
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
@@ -161,8 +159,9 @@ function endgame() {
 	canvasDiv.display = 'none';
 	contanier.display = 'flex';
 	const hideing = document.querySelectorAll('.divbutton');
-	let hide = [...hideing];
-	for (i of hide){};
+	let hide = [ ...hideing ];
+	for (i of hide) {
+	}
 	i.remove(i[3]);
 	i.remove(i[3]);
 	i.remove(i[3]);
@@ -200,12 +199,12 @@ function gamewon() {
 hard.addEventListener('click', () => {
 	if (click === true) {
 		click = false;
-		return player = new Player(200, 400, 50);
+		return (player = new Player(200, 400, 50));
 	}
 });
 easy.addEventListener('click', () => {
 	if (click === true) {
 		click = false;
-		return player = new Player(200, 400, 50);
+		return (player = new Player(200, 400, 50));
 	}
 });
