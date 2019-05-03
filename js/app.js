@@ -14,7 +14,7 @@ const mees = document.querySelector('#mese');
 const imgremove = document.querySelectorAll('.lives');
 let life = [ ...imgremove ];
 const scor = document.querySelector('.score');
-scor.textContent = player.scorey;
+scor.textContent = scorey;
 // Enemies our player must avoid
 class Enemy {
 	constructor(x, y, speed) {
@@ -25,6 +25,14 @@ class Enemy {
 	}
 	render() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	}
+	checkCollisions(){
+		//check fo collision
+		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
+			live--;
+			player.reset();
+			reducelives();
+		}
 	}
 	// Update the enemy's position, required method for game
 	// Parameter: dt, a time delta between ticks
