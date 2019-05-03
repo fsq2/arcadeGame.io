@@ -1,3 +1,4 @@
+'use strict';
 // a counter that I will use for the 3 images
 let live = 3;
 //for the score
@@ -22,28 +23,30 @@ class Enemy {
 		this.speed = speed;
 		this.sprite = 'images/enemy-bug.png';
 	}
+	render() {
+		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 }
 // Update the enemy's position, required method for game
 // Parameter: dt, a time delta between ticks
-Enemy.prototype.update = function(dt) {
-	// You should multiply any movement by the dt parameter
-	// which will ensure the game runs at the same speed for
-	// all computers.
-	this.x = this.x + this.speed * dt;
-	if (this.x >= 505) {
-		this.x = 0;
+
+	// Draw the enemy on the screen, required method for game
+	update(dt) {
+		// You should multiply any movement by the dt parameter
+		// which will ensure the game runs at the same speed for
+		// all computers.
+		this.x = this.x + this.speed * dt;
+		if (this.x >= 505) {
+			this.x = 0;
+		}
+		//check fo collision
+		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
+			live--;
+			player.reset();
+			reducelives();
+		}
 	}
-	//check fo collision
-	if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
-		live--;
-		player.reset();
-		reducelives();
-	}
-};
-// Draw the enemy on the screen, required method for game
-Enemy.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-};
+}
+
 // here I did  an array that will have Enemy  objects
 let allEnemies = [];
 //click on easy mode
@@ -71,6 +74,8 @@ class Player {
 		this.x = x;
 		this.y = y;
 		this.sprite = 'images/char-boy.png';
+		//for the score
+		scorey = 0;
 	}
 	// a reseat methode if the player reach the end or hit
 	reset() {
@@ -86,7 +91,17 @@ class Player {
 		}
 		gamewon();
 	}
-}
+	handleInput(arrowKeyPress) {
+		if (arrowKeyPress === 'right') {
+			this.x += 101;
+		}
+		if (arrowKeyPress === 'left') {
+			this.x -= 101;
+		}
+
+		if (arrowKeyPress === 'up') {
+			this.y -= 84;
+		}
 //draw player in the screen
 Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -139,7 +154,6 @@ document.addEventListener('keyup', function(e) {
 });
 //a model will show if you win or lose
 function endgame() {
-	const message = document.querySelector('#mese');
 	const mees = document.querySelector('#mese');
 	const contanier = document.querySelector('.modl').style;
 	const canvasDiv = document.getElementsByTagName('canvas')[0].style;
