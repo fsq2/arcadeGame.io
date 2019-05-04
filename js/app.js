@@ -1,4 +1,4 @@
-'use strict';
+'use strick';
 // a counter that I will use for the 3 images
 let live = 3;
 //for the score
@@ -26,14 +26,7 @@ class Enemy {
 	render() {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
-	checkCollisions(){
-		//check fo cosllision
-		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
-			live--;
-			player.reset();
-			reducelives();
-		}
-	}
+
 	// Update the enemy's position, required method for game
 	// Parameter: dt, a time delta between ticks
 
@@ -46,7 +39,14 @@ class Enemy {
 		if (this.x >= 505) {
 			this.x = 0;
 		}
-		checkCollisions();
+	}
+	checkCollisions() {
+		//check fo cosllision
+		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
+			live--;
+			player.reset();
+			reducelives();
+		}
 	}
 }
 
@@ -61,7 +61,10 @@ easy.addEventListener('click', () => {
 			new Enemy(0, 220, Math.random() * 200 + 300),
 			new Enemy(0, 150, Math.random() * 150 + 120),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 350 + 400)
+			new Enemy(0, 60, Math.random() * 350 + 400),
+			//craete thw player object
+
+			(player = new Player(200, 400, 50))
 		);
 	}
 });
@@ -71,7 +74,7 @@ hard.addEventListener('click', () => {
 		isfirstclick = false;
 		//push the objects into the array
 
-		allEnemies.push(
+		return allEnemies.push(
 			new Enemy(0, 220, Math.random() * 900 + 1000),
 			new Enemy(0, 150, Math.random() * 700 + 800),
 			//math.random for speed to make the speed an predictable
@@ -167,7 +170,6 @@ function endgame() {
 	const hideing = document.querySelectorAll('.divbutton');
 	let hide = [ ...hideing ];
 	for (i of hide) {
-	}
 		i.remove(i[3]);
 		i.remove(i[3]);
 		i.remove(i[3]);
@@ -202,4 +204,3 @@ function gamewon() {
 		endgame();
 	}
 }
-
