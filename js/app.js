@@ -1,4 +1,3 @@
-'use strick';
 // a counter that I will use for the 3 images
 let live = 3;
 //for the score
@@ -57,15 +56,15 @@ easy.addEventListener('click', () => {
 	if (isfirstclick === true) {
 		isfirstclick = false;
 		//push the objects into the array
-		return allEnemies.push(
+		allEnemies.push(
 			new Enemy(0, 220, Math.random() * 200 + 300),
 			new Enemy(0, 150, Math.random() * 150 + 120),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 350 + 400),
-			//craete thw player object
-
-			(player = new Player(200, 400, 50))
+			new Enemy(0, 60, Math.random() * 350 + 400)
 		);
+		//craete thw player object
+
+		player = new Player(200, 400, 50);
 	}
 });
 //click on hard mode
@@ -74,14 +73,15 @@ hard.addEventListener('click', () => {
 		isfirstclick = false;
 		//push the objects into the array
 
-		return allEnemies.push(
+		allEnemies.push(
 			new Enemy(0, 220, Math.random() * 900 + 1000),
 			new Enemy(0, 150, Math.random() * 700 + 800),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 550 + 600),
-			//craete thw player object
-			(player = new Player(200, 400, 50))
+			new Enemy(0, 60, Math.random() * 550 + 600)
 		);
+		//craete thw player object
+
+		player = new Player(200, 400, 50);
 	}
 });
 class Player {
@@ -106,6 +106,8 @@ class Player {
 		gamewon();
 	}
 	handleInput(arrowKeyPress) {
+		Player.prototype.theEnd();
+
 		if (arrowKeyPress === 'right') {
 			this.x += 101;
 		}
