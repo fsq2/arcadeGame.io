@@ -27,7 +27,7 @@ class Enemy {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 	}
 	checkCollisions(){
-		//check fo collision
+		//check fo cosllision
 		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
 			live--;
 			player.reset();
@@ -46,12 +46,7 @@ class Enemy {
 		if (this.x >= 505) {
 			this.x = 0;
 		}
-		//check fo collision
-		if (this.x < player.x + 50 && this.x + 60 > player.x && this.y < player.y + 40 && 40 + this.y > player.y) {
-			live--;
-			player.reset();
-			reducelives();
-		}
+		checkCollisions();
 	}
 }
 
@@ -75,11 +70,14 @@ hard.addEventListener('click', () => {
 	if (isfirstclick === true) {
 		isfirstclick = false;
 		//push the objects into the array
-		return allEnemies.push(
+
+		allEnemies.push(
 			new Enemy(0, 220, Math.random() * 900 + 1000),
 			new Enemy(0, 150, Math.random() * 700 + 800),
 			//math.random for speed to make the speed an predictable
-			new Enemy(0, 60, Math.random() * 550 + 600)
+			new Enemy(0, 60, Math.random() * 550 + 600),
+			//craete thw player object
+			(player = new Player(200, 400, 50))
 		);
 	}
 });
@@ -170,9 +168,11 @@ function endgame() {
 	let hide = [ ...hideing ];
 	for (i of hide) {
 	}
-	i.remove(i[3]);
-	i.remove(i[3]);
-	i.remove(i[3]);
+		i.remove(i[3]);
+		i.remove(i[3]);
+		i.remove(i[3]);
+	}
+
 	//to relaode the page if the player hit the reseat button
 	buttonmo.addEventListener('click', function() {
 		location.reload();
@@ -203,16 +203,3 @@ function gamewon() {
 	}
 }
 
-//this two Listener is needed to make sure the player is choosing between hard ,easy
-hard.addEventListener('click', () => {
-	if (click === true) {
-		click = false;
-		return (player = new Player(200, 400, 50));
-	}
-});
-easy.addEventListener('click', () => {
-	if (click === true) {
-		click = false;
-		return (player = new Player(200, 400, 50));
-	}
-});
